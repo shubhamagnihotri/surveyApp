@@ -1,4 +1,4 @@
-<ion-header >
+<ion-header>
   <ion-toolbar color="primary">
     <ion-title>Survey Registration</ion-title>
   </ion-toolbar>
@@ -8,346 +8,958 @@
 <ion-content>
   <form [formGroup]="SurveyRegistrationForm">
 
-  <ion-card>
-    <ion-item color="primary">
-      <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"></ion-icon>
-      <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
-      <ion-label>Survey 1 of {{totalFormField}}</ion-label>
-      <ion-button fill="outline" slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content >
-      <ion-grid formGroupName="generalDetail">
-        <ion-row>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">Name
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="name"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.name.invalid && getError.name.touched">
-                <ion-text  color="danger" *ngIf="getError.name.errors?.required">
+    <ion-card>
+      <ion-item color="primary" (click)="setFormGroupNumber(1)">
+        <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"
+          *ngIf="!(showFormGroupNumber == 1 && buttonPressNumber == true)"></ion-icon>
+        <ion-icon ios="ios-remove" md="md-remove" slot="start"
+          *ngIf="(showFormGroupNumber == 1 && buttonPressNumber == true)"></ion-icon>
+        <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+        <ion-badge color="secondary">
+          Genral
+        </ion-badge>
+        <!-- <ion-label>1 of {{totalFormField}}</ion-label> -->
+        <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('generalDetail').invalid">
+          Filled
+        </ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="SurveyRegistrationForm.get('generalDetail').invalid">
+          Not Filled
+        </ion-badge>
+      </ion-item>
+
+      <ion-card-content [ngClass]="(showFormGroupNumber != 1)?'hideFormGroup':'showFormGroup'">
+        <ion-grid formGroupName="generalDetail">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="name"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.name.invalid && getError.name.touched">
+                <ion-text color="danger" *ngIf="getError.name.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-                <ion-text  color="danger" *ngIf="getError.name.errors?.minlength">
+                <ion-text color="danger" *ngIf="getError.name.errors?.minlength">
                   <ion-icon name="alert"></ion-icon> Minimum 3 character.
                 </ion-text>
-            </p>
-            
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Gender
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input class="" type="text" formControlName="gender"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.gender.invalid && getError.gender.touched">
-                <ion-text  color="danger" *ngIf="getError.gender.errors?.required">
+              </p>
+
+            </ion-col>
+            <ion-col size="6">
+
+              <ion-item>
+                <ion-label position="floating">Gender
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="gender">
+                  <ion-select-option value="m">Male</ion-select-option>
+                  <ion-select-option value="f">Female</ion-select-option>
+                  <ion-select-option value="o">Others</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.gender.invalid && getError.gender.touched">
+                <ion-text color="danger" *ngIf="getError.gender.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Age
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="age"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.age.invalid && getError.age.touched">
-                <ion-text  color="danger" *ngIf="getError.age.errors?.required">
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Age
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="age"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.age.invalid && getError.age.touched">
+                <ion-text color="danger" *ngIf="getError.age.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">Mobile No.
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="mobile"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.mobile.invalid && getError.mobile.touched">
-                <ion-text  color="danger" *ngIf="getError.mobile.errors?.required">
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Mobile No.
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="mobile"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.mobile.invalid && getError.mobile.touched">
+                <ion-text color="danger" *ngIf="getError.mobile.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">Father Name
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="fatherName"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.fatherName.invalid && getError.fatherName.touched">
-                <ion-text  color="danger" *ngIf="getError.fatherName.errors?.required">
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Father Name
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="fatherName"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.fatherName.invalid && getError.fatherName.touched">
+                <ion-text color="danger" *ngIf="getError.fatherName.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">Address House No.
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="addressHNo"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.addressHNo.invalid && getError.addressHNo.touched">
-                <ion-text  color="danger" *ngIf="getError.addressHNo.errors?.required">
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Address House No.
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="addressHNo"></ion-input>
+              </ion-item>
+
+              <p *ngIf="getError.addressHNo.invalid && getError.addressHNo.touched">
+                <ion-text color="danger" *ngIf="getError.addressHNo.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label position="floating">Village
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="village"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.village.invalid && getError.village.touched">
-                <ion-text  color="danger" *ngIf="getError.village.errors?.required">
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Village
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="village">
+                  <ion-select-option value="m">Male</ion-select-option>
+                  <ion-select-option value="f">Female</ion-select-option>
+                  <ion-select-option value="o">Others</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.village.invalid && getError.village.touched">
+                <ion-text color="danger" *ngIf="getError.village.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label position="floating">Tehsil
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="tehsil"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.tehsil.invalid && 
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Tehsil
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="tehsil">
+                  <ion-select-option value="m">Male</ion-select-option>
+                  <ion-select-option value="f">Female</ion-select-option>
+                  <ion-select-option value="o">Others</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.tehsil.invalid && 
             getError.tehsil.touched">
-                <ion-text  color="danger" *ngIf="getError.tehsil.errors?.required">
+                <ion-text color="danger" *ngIf="getError.tehsil.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="4">
-            <ion-item>
-              <ion-label position="floating">District
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="district"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.district.invalid && 
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">District
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="district">
+                  <ion-select-option value="m">Male</ion-select-option>
+                  <ion-select-option value="f">Female</ion-select-option>
+                  <ion-select-option value="o">Others</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.district.invalid && 
             getError.district.touched">
-                <ion-text  color="danger" *ngIf="getError.district.errors?.required">
+                <ion-text color="danger" *ngIf="getError.district.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-        
-          <ion-col size="4">
-            <ion-item>
-              <ion-label position="floating">State
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="state"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.state.invalid && 
+              </p>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">State
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="state">
+                  <ion-select-option value="m">Male</ion-select-option>
+                  <ion-select-option value="f">Female</ion-select-option>
+                  <ion-select-option value="o">Others</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.state.invalid && 
             getError.state.touched">
-                <ion-text  color="danger" *ngIf="getError.state.errors?.required">
+                <ion-text color="danger" *ngIf="getError.state.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="8">
-            <ion-item>
-              <ion-label position="floating">Adhaar No.
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="adhaarNo"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.adhaarNo.invalid && getError.adhaarNo.touched">
-                <ion-text  color="danger" *ngIf="getError.adhaarNo.errors?.required">
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Adhaar No.
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="adhaarNo"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.adhaarNo.invalid && getError.adhaarNo.touched">
+                <ion-text color="danger" *ngIf="getError.adhaarNo.errors?.required">
                   <ion-icon name="alert"></ion-icon>Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Use Smart Phone
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="smartPhone"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.smartPhone.invalid && 
+              </p>
+            </ion-col>
+            <ion-col size="7">
+              <ion-item>
+                <!-- <ion-checkbox color="danger" checked formControlName="smartPhone"></ion-checkbox> -->
+                <ion-label position="floating">Use of Smart Phone?
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="smartPhone">
+                  <ion-select-option value="1">Yes</ion-select-option>
+                  <ion-select-option value="0">No</ion-select-option>
+
+                </ion-select>
+              </ion-item>
+              <!-- <ion-item>
+                
+                <ion-label position="floating">Use Smart Phone
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="smartPhone"></ion-input>
+              </ion-item> -->
+              <p *ngIf="getError.smartPhone.invalid && 
             getError.smartPhone.touched">
-                <ion-text  color="danger" *ngIf="getError.smartPhone.errors?.required">
+                <ion-text color="danger" *ngIf="getError.smartPhone.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
+              </p>
+            </ion-col>
 
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Type
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="type"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.type.invalid && 
+            <ion-col size="5">
+              <ion-item>
+                <ion-label position="floating">Type
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="type">
+                  <ion-select-option value="loanee">Loanee</ion-select-option>
+                  <ion-select-option value="nonLoanee">Non Loanee</ion-select-option>
+                </ion-select>
+
+              </ion-item>
+              <p *ngIf="getError.type.invalid && 
             getError.type.touched">
-                <ion-text  color="danger" *ngIf="getError.type.errors?.required">
+                <ion-text color="danger" *ngIf="getError.type.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
+              </p>
+            </ion-col>
 
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">if Loanee Amount</ion-label>
-              <ion-input type="text" formControlName="ifLoaneeAmount"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.ifLoaneeAmount.invalid && getError.ifLoaneeAmount.touched">
-                <ion-text  color="danger" *ngIf="getError.ifLoaneeAmount.errors?.required">
+            <ion-col size="12" *ngIf="getError.type.value == 'loanee'">
+              <ion-item>
+                <ion-label position="floating">if Loanee Amount</ion-label>
+                <ion-input type="text" formControlName="ifLoaneeAmount"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ifLoaneeAmount.invalid && getError.ifLoaneeAmount.touched">
+                <ion-text color="danger" *ngIf="getError.ifLoaneeAmount.errors?.required">
                   <ion-icon name="alert"></ion-icon> Required.
                 </ion-text>
-            </p>
-          </ion-col>
-          
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">Loan Source</ion-label>
-              <ion-input type="text" formControlName="loanSource"></ion-input>
-            </ion-item>
-            <p *ngIf="getError.loanSource.invalid && 
-            getError.loanSource.touched">
-                <ion-text  color="danger" *ngIf="getError.loanSource.errors?.required">
-                  <ion-icon name="alert"></ion-icon> Required.
-                </ion-text>
-            </p>
-          </ion-col>
-               
-          <ion-col size="12">
-            
-          </ion-col>
+              </p>
+            </ion-col>
 
-        </ion-row>
+            <ion-col size="12" *ngIf="getError.type.value == 'loanee'">
+              <ion-item>
+                <ion-label position="floating">Loan Source</ion-label>
+                <ion-input type="text" formControlName="loanSource"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.loanSource.invalid && getError.loanSource.touched">
+                <ion-text color="danger" *ngIf="getError.loanSource.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+            <ion-col size="12">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="dark" [disabled]="SurveyRegistrationForm.get('generalDetail').invalid"
+                  (click)=setFormGroupNumber(2)>Next</ion-button>
+              </section>
+            </ion-col>
+
+          </ion-row>
         </ion-grid>
-    </ion-card-content>
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
 
 
-  
-  <ion-card>
-    <ion-item color="primary">
-      <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"></ion-icon>
-      <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
-      <ion-label>Survey 2 of {{totalFormField}}</ion-label>
-      <ion-button fill="outline" slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content >
-      <ion-grid formGroupName="demographicSocialProfile">
-        <ion-row>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">socialGroup
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="socialGroup"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">educationalQualification
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="educationalQualification"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="12">
-            <ion-item>
-              <ion-label position="floating">farmerCategory
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="farmerCategory"></ion-input>
-            </ion-item>
-          </ion-col>
+
+    <ion-card>
+      <ion-item color="primary" (click)="setFormGroupNumber(2)">
+        <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"
+          *ngIf="!(showFormGroupNumber == 2 && buttonPressNumber == true)"></ion-icon>
+        <ion-icon ios="ios-remove" md="md-remove" slot="start"
+          *ngIf="(showFormGroupNumber == 2 && buttonPressNumber == true)"></ion-icon>
+        <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+        <ion-badge color="secondary">
+          Demographic
+        </ion-badge>
+        <!-- <ion-label>2 of {{totalFormField}}</ion-label> -->
+        <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('demographicSocialProfile').invalid">
+          Filled
+        </ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="SurveyRegistrationForm.get('demographicSocialProfile').invalid">
+          Not Filled
+        </ion-badge>
+      </ion-item>
+
+      <ion-card-content [ngClass]="(showFormGroupNumber != 2)?'hideFormGroup':'showFormGroup'">
+        <ion-grid formGroupName="demographicSocialProfile">
+          <ion-row>
+            <ion-col size="7">
+              <ion-item>
+                <ion-label position="floating"> Social Group
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="socialGroup">
+                  <ion-select-option value="sc">SC</ion-select-option>
+                  <ion-select-option value="st">ST</ion-select-option>
+                  <ion-select-option value="obc">OBC</ion-select-option>
+                  <ion-select-option value="gen">Gen</ion-select-option>
+                  <ion-select-option value="others">Others</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.socialGroup.invalid && getError.socialGroup.touched">
+                <ion-text color="danger" *ngIf="getError.socialGroup.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+
+            </ion-col>
+            <ion-col size="5">
+              <ion-item>
+                <ion-label position="floating">Education
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-select interface="popover" formControlName="educationalQualification">
+                  <ion-select-option value="upTo5">Upto 5th</ion-select-option>
+                  <ion-select-option value="6-10">6-10 th</ion-select-option>
+                  <ion-select-option value="matriculation">Matriculation</ion-select-option>
+                  <ion-select-option value="graduation">Graduation</ion-select-option>
+                  <ion-select-option value="pg">PG</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.educationalQualification.invalid && getError.educationalQualification.touched">
+                <ion-text color="danger" *ngIf="getError.educationalQualification.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Farmer Category
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="farmerCategory">
+                  <ion-select-option value="marginal">Marginal</ion-select-option>
+                  <ion-select-option value="small">Small</ion-select-option>
+                  <ion-select-option value="medium">Medium</ion-select-option>
+                  <ion-select-option value="large">Large</ion-select-option>
+                  <ion-select-option value="tenantSharecropper">Tenant/Sharecropper</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.farmerCategory.invalid && getError.farmerCategory.touched">
+                <ion-text color="danger" *ngIf="getError.farmerCategory.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
           </ion-row>
 
           <ion-row formGroupName="hhmember">
-          <ion-col size="6" >
-            <ion-item>
-              <ion-label position="floating">Male
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="maleMember"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Female
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="femaleMember"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">child
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="childrenMember"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Total
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="totalMember"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Male Member
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="maleMember"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.maleMember.invalid && getError.maleMember.touched">
+                <ion-text color="danger" *ngIf="getError.maleMember.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Female Member
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="femaleMember"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.femaleMember.invalid && getError.femaleMember.touched">
+                <ion-text color="danger" *ngIf="getError.femaleMember.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">child Member
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="childrenMember"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.childrenMember.invalid && getError.childrenMember.touched">
+                <ion-text color="danger" *ngIf="getError.childrenMember.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Total
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="totalMember"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.totalMember.invalid && getError.totalMember.touched">
+                <ion-text color="danger" *ngIf="getError.totalMember.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
 
-        <ion-row formGroupName="hhWorkingMember">
-          <ion-col size="6" >
-            <ion-item>
-              <ion-label position="floating">Male
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="maleWorking"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Female
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="femaleWorking"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">Total
-                <ion-text color="danger">*</ion-text>
-              </ion-label>
-              <ion-input type="text" formControlName="totalWorking"></ion-input>
-            </ion-item>
-          </ion-col>
-       
-        </ion-row>
-          
-        
-
-        
+          <ion-row formGroupName="hhWorkingMember">
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Male Working
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="maleWorking"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.maleWorking.invalid && getError.maleWorking.touched">
+                <ion-text color="danger" *ngIf="getError.maleWorking.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Female Working
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="femaleWorking"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.femaleWorking.invalid && getError.femaleWorking.touched">
+                <ion-text color="danger" *ngIf="getError.femaleWorking.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Total Working
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="totalWorking"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.totalWorking.invalid && getError.totalWorking.touched">
+                <ion-text color="danger" *ngIf="getError.totalWorking.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(1)>
+                  Previous
+                </ion-button>
+              </section>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="warning"
+                  [disabled]="SurveyRegistrationForm.get('demographicSocialProfile').invalid"
+                  (click)=setFormGroupNumber(3)>Next</ion-button>
+              </section>
+            </ion-col>
+          </ion-row>
         </ion-grid>
-    </ion-card-content>
-  </ion-card>
+      </ion-card-content>
+    </ion-card>
 
 
 
 
+    <!------Land Detail----->
+    <ion-card>
+      <ion-item color="primary" (click)="setFormGroupNumber(3)">
+        <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"
+          *ngIf="!(showFormGroupNumber == 2 && buttonPressNumber == true)"></ion-icon>
+        <ion-icon ios="ios-remove" md="md-remove" slot="start"
+          *ngIf="(showFormGroupNumber == 2 && buttonPressNumber == true)"></ion-icon>
+        <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+        <ion-badge color="secondary">
+          Land Details
+        </ion-badge>
+        <!-- <ion-label>Survey 3 of {{totalFormField}}</ion-label> -->
+        <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('landDetail').invalid">
+          Filled
+        </ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="SurveyRegistrationForm.get('landDetail').invalid">
+          Not Filled
+        </ion-badge>
+      </ion-item>
+      <ion-card-content [ngClass]="(showFormGroupNumber != 3)?'hideFormGroup':'showFormGroup'">
+        <ion-grid formGroupName="landDetail">
+          <ion-row>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Size of Holdings
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="holdingSize"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
 
-</form>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating"> Owned Land
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="ownedLand"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Leased In
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="leasdedIn"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.leasdedIn.invalid && getError.leasdedIn.touched">
+                <ion-text color="danger" *ngIf="getError.leasdedIn.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Irrigation Available
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="irrigationAvailable">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.irrigationAvailable.invalid && getError.irrigationAvailable.touched">
+                <ion-text color="danger" *ngIf="getError.irrigationAvailable.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12" *ngIf="getError.irrigationAvailable.value == 'y'">
+              <ion-item>
+                <ion-label position="floating">If irrigation source of irrigation
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="irrigationSource"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.irrigationSource.invalid && getError.irrigationSource.touched">
+                <ion-text color="danger" *ngIf="getError.irrigationSource.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12" *ngIf="getError.irrigationAvailable.value == 'y'">
+              <ion-item>
+                <ion-label position="floating">Irrigated Area
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="irrigatedArea"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.irrigatedArea.invalid && getError.irrigatedArea.touched">
+                <ion-text color="danger" *ngIf="getError.irrigatedArea.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(2)>
+                  Previous
+                </ion-button>
+              </section>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="warning" [disabled]="SurveyRegistrationForm.get('landDetail').invalid"
+                  (click)=setFormGroupNumber(4)>Next</ion-button>
+              </section>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+    <!------Land Detail end----->
+
+
+
+    <!------croppingPattern start----->
+    <ion-card>
+      <ion-item color="primary" (click)="setFormGroupNumber(4)">
+        <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"
+          *ngIf="!(showFormGroupNumber == 4 && buttonPressNumber == true)"></ion-icon>
+        <ion-icon ios="ios-remove" md="md-remove" slot="start"
+          *ngIf="(showFormGroupNumber == 4 && buttonPressNumber == true)"></ion-icon>
+        <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+        <ion-badge color="secondary">
+          Cropping Pattern
+        </ion-badge>
+
+        <!-- <ion-label>Survey 3 of {{totalFormField}}</ion-label> -->
+        <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('croppingPattern').invalid">
+          Filled
+        </ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="SurveyRegistrationForm.get('croppingPattern').invalid">
+          Not Filled
+        </ion-badge>
+      </ion-item>
+      <ion-card-content [ngClass]="(showFormGroupNumber != 4)?'hideFormGroup':'showFormGroup'">
+        <ion-grid>
+          <div formArrayName="croppingPattern">
+
+            <div style="border: 1px solid #a75c77;" *ngFor="let croppingPattern of SurveyRegistrationForm.get('croppingPattern').controls;let i = index;let first = first; 
+              let last = last;" formGroupName="{{i}}">
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item color="tertiary" (click)="setCroppingPatternShow(i)">
+
+                    <ion-badge color="secondary">
+                      Crop {{i+1}}
+                    </ion-badge>
+                    <ion-icon ios="ios-trash" md="md-trash" slot="end"></ion-icon>
+                    <ion-icon ios="ios-color-wand" md="md-color-wand" slot="end"></ion-icon>
+
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row [ngClass]="(croppingPatternShowForm != i)?'hideFormGroup':'showFormGroup'">
+
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">Crop
+                      <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input type="text" formControlName="crop"></ion-input>
+                  </ion-item>
+                  <p *ngIf="croppingPattern.get('crop').invalid && croppingPattern.get('crop').touched">
+                    <ion-text color="danger" *ngIf="croppingPattern.get('crop').errors?.required">
+                      <ion-icon name="alert"></ion-icon> Required.
+                    </ion-text>
+                  </p>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">Area
+                      <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input type="text" formControlName="area"></ion-input>
+                  </ion-item>
+                  <p *ngIf="croppingPattern.get('area').invalid && croppingPattern.get('area').touched">
+                    <ion-text color="danger" *ngIf="croppingPattern.get('area').errors?.required">
+                      <ion-icon name="alert"></ion-icon> Required.
+                    </ion-text>
+                  </p>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">Yield
+                      <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input type="text" formControlName="yield"></ion-input>
+                  </ion-item>
+                  <p *ngIf="croppingPattern.get('yield').invalid && croppingPattern.get('yield').touched">
+                    <ion-text color="danger" *ngIf="croppingPattern.get('yield').errors?.required">
+                      <ion-icon name="alert"></ion-icon> Required.
+                    </ion-text>
+                  </p>
+                </ion-col>
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">sellingPrice
+                      <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input type="text" formControlName="sellingPrice"></ion-input>
+                  </ion-item>
+                  <p *ngIf="croppingPattern.get('sellingPrice').invalid && croppingPattern.get('sellingPrice').touched">
+                    <ion-text color="danger" *ngIf="croppingPattern.get('sellingPrice').errors?.required">
+                      <ion-icon name="alert"></ion-icon> Required.
+                    </ion-text>
+                  </p>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating">Amount
+                      <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input type="text" formControlName="amount"></ion-input>
+                  </ion-item>
+                  <p *ngIf="croppingPattern.get('amount').invalid && croppingPattern.get('amount').touched">
+                    <ion-text color="danger" *ngIf="croppingPattern.get('amount').errors?.required">
+                      <ion-icon name="alert"></ion-icon> Required.
+                    </ion-text>
+                  </p>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating">Sold To
+                      <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input type="text" formControlName="soldTo"></ion-input>
+                  </ion-item>
+                  <p *ngIf="croppingPattern.get('soldTo').invalid && croppingPattern.get('soldTo').touched">
+                    <ion-text color="danger" *ngIf="croppingPattern.get('soldTo').errors?.required">
+                      <ion-icon name="alert"></ion-icon> Required.
+                    </ion-text>
+                  </p>
+                </ion-col>
+
+
+                <ion-col size="12" *ngIf="last && (i < 4)">
+                  <section>
+                    <!-- <header>Block Width</header> -->
+                    <ion-button expand="block" color="danger"
+                      [disabled]="SurveyRegistrationForm.get('croppingPattern').invalid"
+                      (click)="addCroppingPatternFormData()">Add More</ion-button>
+                  </section>
+                </ion-col>
+
+              </ion-row>
+
+            </div>
+          </div>
+        </ion-grid>
+      </ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <section>
+              <!-- <header>Block Width</header> -->
+              <ion-button expand="block" color="primary" (click)=setFormGroupNumber(3)>
+                Previous
+              </ion-button>
+            </section>
+          </ion-col>
+          <ion-col size="6">
+            <section>
+              <!-- <header>Block Width</header> -->
+              <ion-button expand="block" color="warning"
+                [disabled]="SurveyRegistrationForm.get('croppingPattern').invalid" (click)=setFormGroupNumber(5)>
+                Next</ion-button>
+            </section>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+
+    <!------costOfCultivation start----->
+    <ion-card>
+      <ion-item color="primary" (click)="setFormGroupNumber(5)">
+        <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"
+          *ngIf="!(showFormGroupNumber == 5 && buttonPressNumber == true)"></ion-icon>
+        <ion-icon ios="ios-remove" md="md-remove" slot="start"
+          *ngIf="(showFormGroupNumber == 5 && buttonPressNumber == true)"></ion-icon>
+        <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+        <ion-badge color="secondary">
+         Cost of Cultivation
+        </ion-badge>
+        <!-- <ion-label>Survey 3 of {{totalFormField}}</ion-label> -->
+        <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('costOfCultivation').invalid">
+          Filled
+        </ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="SurveyRegistrationForm.get('costOfCultivation').invalid">
+          Not Filled
+        </ion-badge>
+      </ion-item>
+      <ion-card-content [ngClass]="(showFormGroupNumber != 5)?'hideFormGroup':'showFormGroup'">
+        <ion-grid formGroupName="costOfCultivation">
+          <ion-row style="border: 1px solid #0cd1e8;">
+            <ion-col size="12">              
+              <ion-chip color="secondary">
+                <ion-label>Land Preparation</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">(Unit Cost)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="landPreparationUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">(Total Cost)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="landPreparationTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row style="border: 1px solid #0cd1e8;" formGroupName="sowing">
+            <ion-col size="12">              
+              <ion-chip color="secondary">
+                <ion-label>Sowing –</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Seed (Unit Cost)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="seedCostUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Seed (Total Cost)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="seedCostTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Sowing (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="SowingUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Sowing (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="sowingTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row style="border: 1px solid #0cd1e8;">
+            <ion-col size="12">              
+              <ion-chip color="secondary">
+                <ion-label>Cost of Manure & Fertilizer</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">(Unit Cost)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="manureFertilizerCostUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">(Total Cost)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="manureFertilizerCostTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(2)>
+                  Previous
+                </ion-button>
+              </section>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="warning" [disabled]="SurveyRegistrationForm.get('landDetail').invalid"
+                  (click)=setFormGroupNumber(4)>Next</ion-button>
+              </section>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+       <!------costOfCultivation end----->
+
+
+  </form>
 
 
 </ion-content>
