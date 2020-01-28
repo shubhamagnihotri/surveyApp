@@ -9,9 +9,14 @@ export class SurveyRegistrationPage implements OnInit {
   totalFormField = 10;
   croppingPatternShowForm:any;
   croppingPatternButtonPress:boolean;
+  LoaneeFasalBimaShowForm:any;
+  LoaneeFasalBimaButtonPress:boolean;
+
+  sourceOfawarenessShowForm:any;
+  sourceOfawarenessButtonPress:boolean;
   SurveyRegistrationForm: FormGroup;
   getError: any;
-  showFormGroupNumber:any=5;
+  showFormGroupNumber:any=7;
   buttonPressNumber:boolean;
   constructor(public fb: FormBuilder) { }
 
@@ -43,6 +48,26 @@ export class SurveyRegistrationPage implements OnInit {
     }else{
       this.croppingPatternButtonPress = false;
       this.croppingPatternShowForm = null;
+    }
+  }
+
+  setSourceOfawarenessShow(number){
+    if(number != this.sourceOfawarenessShowForm){
+      this.sourceOfawarenessButtonPress = true ;
+      this.sourceOfawarenessShowForm = number;
+    }else{
+      this.sourceOfawarenessButtonPress = false;
+      this.sourceOfawarenessShowForm = null;
+    }
+  }
+
+  setLoaneeFasalBimaShow(number){
+    if(number != this.LoaneeFasalBimaShowForm){
+      this.LoaneeFasalBimaButtonPress = true ;
+      this.LoaneeFasalBimaShowForm = number;
+    }else{
+      this.LoaneeFasalBimaButtonPress = false;
+      this.LoaneeFasalBimaShowForm = null;
     }
   }
 
@@ -100,6 +125,7 @@ export class SurveyRegistrationPage implements OnInit {
         this.addCroppingPattern(),
       ]),
 
+     
       // costOfCultivation group
       costOfCultivation: this.fb.group({
 
@@ -152,9 +178,12 @@ export class SurveyRegistrationPage implements OnInit {
           transportationTotalCost: ['', Validators.required],
           marketingCommissionTotalCost: ['', Validators.required]
         }),
-        totalExpenditure: ['', Validators.required],
-        saleOfFarmProduce: ['', Validators.required],
-        netProfitLoss: ['', Validators.required]
+        totalExpenditureUnitCost: ['', Validators.required],
+        totalExpenditureTotalCost: ['', Validators.required],
+        saleOfFarmProduceUnitCost: ['', Validators.required],
+        saleOfFarmProduceTotalCost: ['', Validators.required],
+        netProfitLossUnitCost: ['', Validators.required],
+        netProfitLossTotalCost: ['', Validators.required]
       }),
       // awareness group
       awareness:this.fb.group({
@@ -178,41 +207,39 @@ export class SurveyRegistrationPage implements OnInit {
           claimProcessRwbcis:[],
           grievanceRedresselPmfby:[],
           grievanceRedresselRwbcis:[],
-          InsuranceCompanyNoPmfby:[],
-          InsuranceCompanyNoRwbcis:[],
+          insuranceCompanyNoPmfby:[],
+          insuranceCompanyNoRwbcis:[],
           cropInsuranceAppPmfby:[],
           cropInsuranceAppRwbcis:[],
           applicationTrackingPmfby:[],
           applicationTrackingRwbcis:[],
         }),
-        SourcesOfAwareness:[],
-        govtOfficials:[],
-        banks:[],
-        insuranceCompanyTollNo:[],
-        insuranceCompanyRepresentative:[],
-        cscVle:[],
-        gramPanchayat:[],
-        fellowFarmer:[],
-        modeOfInformation:[],
-        specificModeOfInformation:[],
-        isSeminarAttendedPmfby:[],
-        whenSeminarAttended:[],
-        whereSeminarAttended:[],
+        modeOfInformation:[''],
+        specificModeOfInformation:[''],
+        isSeminarAttendedPmfby:[''],
+        whenSeminarAttended:[''],
+        whereSeminarAttended:['']
       }),
-      //loaneeEnrollment group
-      loaneeEnrollment:this.fb.group({
-        haveKcc:[],
-        availLoan:[],
-        loanPremiumDeducTionAwareness:[],
-        pradhanMantriFasalBima:this.fb.group({
-          cropSeason:[''],
-          cropInsured:[''],
-          areaInsured:[''],
-          farmerPremium:[''],
-          sumInsured:[''] 
-        })
-      })
 
+         //awarenessSourceDetail:
+      awarenessSourceDetail:this.fb.array([
+          this.addAwarenessSourceDetail(),
+      ]),
+
+      //Enrollment group
+      enrollmentdetail:this.fb.group({
+        loaneeType:[''],
+        // for loanee
+        loaneeEnrollment:this.fb.group({
+          haveKcc:[],
+          availLoan:[],
+          loanPremiumDeducTionAwareness:[],
+          pradhanMantriFasalBima:this.fb.array([
+            this.addLoaneePradhanMantriFasalBimaForm()
+          ])
+        }),
+        // for Non loanee
+      }),
 
     });// form group closed
 
@@ -271,6 +298,38 @@ export class SurveyRegistrationPage implements OnInit {
     });
   }
 
+  addAwarenessSourceDetail():FormGroup{
+    return this.fb.group({
+      sourcesOfAwareness:['', Validators.required],
+      govtOfficials:['', Validators.required],
+      banks:['', Validators.required],
+      insuranceCompanyTollNo:['', Validators.required],
+      insuranceCompanyRepresentative:['', Validators.required],
+      cscVle:['', Validators.required],
+      gramPanchayat:['', Validators.required],
+      fellowFarmer:['', Validators.required]
+    });
+  }
+  addLoaneePradhanMantriFasalBimaForm():FormGroup{
+    return this.fb.group({
+      cropSeason:[''],
+      cropInsured:[''],
+      areaInsured:[''],
+      farmerPremium:[''],
+      sumInsured:[''] 
+    })
+  }
+  get AwarenessSourceArray(){
+    return this.SurveyRegistrationForm.get('awarenessSourceDetail') as FormArray;
+  }
+  get loaneePradhanMantriFasalBima(){
+    return this.SurveyRegistrationForm
+    .get('enrollmentdetail')
+    .get('loaneeEnrollment')
+    .get('pradhanMantriFasalBima') as FormArray;
+  }
+
+
   // push object in to form array 
   addCroppingPatternFormData():void{
     (<FormArray>this.SurveyRegistrationForm.get('croppingPattern')).push(
@@ -279,6 +338,22 @@ export class SurveyRegistrationPage implements OnInit {
     this.croppingPatternShowForm += 1;
     console.log(this.SurveyRegistrationForm.get('croppingPattern'));
   }
+
+  addsourcesOfAwarenessFormData(){
+    (<FormArray>this.SurveyRegistrationForm.get('awarenessSourceDetail')).push(
+      this.addAwarenessSourceDetail()
+    )
+    this.sourceOfawarenessShowForm +=1;
+  }
+  addLoaneePradhanMantriFasalBima(){
+    (<FormArray>this.SurveyRegistrationForm
+      .get('enrollmentdetail')
+      .get('loaneeEnrollment')
+      .get('pradhanMantriFasalBima')).push(
+      this.addAwarenessSourceDetail()
+    )
+  }
+
   getFormError() {
     this.getError = {
       //general details
@@ -330,7 +405,8 @@ export class SurveyRegistrationPage implements OnInit {
       amount:this.SurveyRegistrationForm.get('croppingPattern').get('amount'),
       soldTo:this.SurveyRegistrationForm.get('croppingPattern').get('soldTo'),
     }
-    console.log(this.getError);
+    console.log(this.SurveyRegistrationForm.get('croppingPattern'));
+    console.log(this.SurveyRegistrationForm.get('awarenessSourceDetail'));
   }
 
 }
