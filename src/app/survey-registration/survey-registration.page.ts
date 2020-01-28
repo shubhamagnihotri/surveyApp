@@ -11,9 +11,12 @@ export class SurveyRegistrationPage implements OnInit {
   croppingPatternButtonPress:boolean;
   LoaneeFasalBimaShowForm:any;
   LoaneeFasalBimaButtonPress:boolean;
-
+  nonLoaneeFasalBimaShowForm:any;
+  nonLoaneeFasalBimaButtonPress:boolean;
   sourceOfawarenessShowForm:any;
   sourceOfawarenessButtonPress:boolean;
+  enrolmentDocumentShowForm:any;
+  enrolmentDocumentButtonPress:boolean;
   SurveyRegistrationForm: FormGroup;
   getError: any;
   showFormGroupNumber:any=7;
@@ -71,6 +74,25 @@ export class SurveyRegistrationPage implements OnInit {
     }
   }
 
+  setNonLoaneeFasalBimaShow(number){
+    if(number != this.nonLoaneeFasalBimaShowForm){
+      this.nonLoaneeFasalBimaButtonPress = true ;
+      this.nonLoaneeFasalBimaShowForm= number;
+    }else{
+      this.nonLoaneeFasalBimaButtonPress = false;
+      this.nonLoaneeFasalBimaShowForm = null;
+    }
+  }
+
+  setrequiredEnrolmentDocumentShow(number){
+    if(number != this.enrolmentDocumentShowForm){
+      this.enrolmentDocumentButtonPress = true ;
+      this.enrolmentDocumentShowForm= number;
+    }else{
+      this.enrolmentDocumentButtonPress = false;
+      this.enrolmentDocumentShowForm = null;
+    }
+  }
 
   getForm() {
     this.SurveyRegistrationForm = this.fb.group({
@@ -229,16 +251,36 @@ export class SurveyRegistrationPage implements OnInit {
       //Enrollment group
       enrollmentdetail:this.fb.group({
         loaneeType:[''],
-        // for loanee
+        // for loanee farmer
         loaneeEnrollment:this.fb.group({
           haveKcc:[],
           availLoan:[],
           loanPremiumDeducTionAwareness:[],
           pradhanMantriFasalBima:this.fb.array([
             this.addLoaneePradhanMantriFasalBimaForm()
-          ])
+          ]),
+          receiptAcknowledgementProvided:[],
+          reciveSmsForPmfby:[]
         }),
         // for Non loanee
+        nonLoaneeEnrollment:this.fb.group({
+          nonLoaneeCroppingDetail:this.fb.array([
+            this.addLoaneePradhanMantriFasalBimaForm()
+          ]),
+          enrollmentChannelPremiumPay:[],
+          specificEnrollmentChannelPremiumPay:[],
+          payExtraMoneyCsc:[],
+          processOfInsuringCropUnderPmfby:[],
+          resonProcessOfInsuringCropUnderPmfby:[],
+          cutOffDateUnderPmfby:[],
+          requiredEnrolmentDocument:this.fb.array([
+            this.addRequiredEnrolmentDocument()
+          ]),
+          receiptProvidedForSame:[],
+          isSmsReciveForPmfby:[]
+       
+        }),
+
       }),
 
     });// form group closed
@@ -319,6 +361,12 @@ export class SurveyRegistrationPage implements OnInit {
       sumInsured:[''] 
     })
   }
+
+  addRequiredEnrolmentDocument():FormGroup{
+    return this.fb.group({
+      enrolmentDocument:[''],
+    });
+  }
   get AwarenessSourceArray(){
     return this.SurveyRegistrationForm.get('awarenessSourceDetail') as FormArray;
   }
@@ -329,6 +377,16 @@ export class SurveyRegistrationPage implements OnInit {
     .get('pradhanMantriFasalBima') as FormArray;
   }
 
+  get nonLoaneeCroppingDetailArray(){
+    return this.SurveyRegistrationForm
+    .get('enrollmentdetail')
+    .get('nonLoaneeEnrollment').get('nonLoaneeCroppingDetail') as FormArray;
+  }
+
+  get requiredEnrolmentDocumentArray(){
+    return this.SurveyRegistrationForm.get('enrollmentdetail')
+    .get('nonLoaneeEnrollment').get('requiredEnrolmentDocument') as FormArray;
+  }
 
   // push object in to form array 
   addCroppingPatternFormData():void{
@@ -338,6 +396,7 @@ export class SurveyRegistrationPage implements OnInit {
     this.croppingPatternShowForm += 1;
     console.log(this.SurveyRegistrationForm.get('croppingPattern'));
   }
+
 
   addsourcesOfAwarenessFormData(){
     (<FormArray>this.SurveyRegistrationForm.get('awarenessSourceDetail')).push(
@@ -350,10 +409,26 @@ export class SurveyRegistrationPage implements OnInit {
       .get('enrollmentdetail')
       .get('loaneeEnrollment')
       .get('pradhanMantriFasalBima')).push(
-      this.addAwarenessSourceDetail()
+      this.addLoaneePradhanMantriFasalBimaForm()
     )
+    this.LoaneeFasalBimaShowForm +=1;
   }
 
+  addNonLoaneeCroppingDetailFormData(){
+     (<FormArray>this.SurveyRegistrationForm
+      .get('enrollmentdetail')
+      .get('nonLoaneeEnrollment').get('nonLoaneeCroppingDetail')).push(
+      this.addLoaneePradhanMantriFasalBimaForm()
+    )
+    this.nonLoaneeFasalBimaShowForm +=1;
+  }
+
+  addRequiredEnrolmentDocumentFormData(){
+    (<FormArray>this.SurveyRegistrationForm .get('enrollmentdetail')
+    .get('nonLoaneeEnrollment').get('requiredEnrolmentDocument')).push(
+    this.addRequiredEnrolmentDocument())
+    this.enrolmentDocumentShowForm +=1;
+  }
   getFormError() {
     this.getError = {
       //general details
@@ -405,8 +480,8 @@ export class SurveyRegistrationPage implements OnInit {
       amount:this.SurveyRegistrationForm.get('croppingPattern').get('amount'),
       soldTo:this.SurveyRegistrationForm.get('croppingPattern').get('soldTo'),
     }
-    console.log(this.SurveyRegistrationForm.get('croppingPattern'));
-    console.log(this.SurveyRegistrationForm.get('awarenessSourceDetail'));
+    console.log(this.requiredEnrolmentDocumentArray);
+   // console.log(this.SurveyRegistrationForm.get('awarenessSourceDetail'));
   }
 
 }
