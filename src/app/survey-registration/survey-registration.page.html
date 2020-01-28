@@ -2071,7 +2071,7 @@
           *ngIf="(showFormGroupNumber == 7 && buttonPressNumber == true)"></ion-icon>
         <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
         <ion-badge color="secondary">
-          Genral
+          Enrollment
         </ion-badge>
         <!-- <ion-label>1 of {{totalFormField}}</ion-label> -->
         <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('enrollmentdetail').invalid">
@@ -2122,9 +2122,9 @@
                 <ion-label position="floating">Loan Avail
                   <ion-text color="danger">*</ion-text>
                 </ion-label>
-                <ion-select interface="popover" formControlName="availLoan">
+               
                   <ion-input type="text" formControlName="availLoan"></ion-input>
-                </ion-select>
+                
               </ion-item>
             </ion-col>
             <ion-col size="12">
@@ -2138,19 +2138,19 @@
                 </ion-select>
               </ion-item>
             </ion-col>
+            
+            <!---pradhanMantriFasalBima start for loanee---->
+       
+            <div formArrayName="pradhanMantriFasalBima" style="width: 100%;">
 
-            <!---pradhanMantriFasalBima start---->
-
-            <div formArrayName="pradhanMantriFasalBima">
-
-              <div style="border: 1px solid #a75c77;" *ngFor="let loaneePradhanMantriFasalBima of loaneePradhanMantriFasalBima.controls;let o = index;let first = first; 
+              <div style="border: 1px solid #a75c77;" *ngFor="let loaneePradhanMantri of loaneePradhanMantriFasalBima.controls;let o = index;let first = first; 
               let last = last;" formGroupName="{{o}}">
                 <ion-row>
                   <ion-col size="12">
                     <ion-item color="tertiary" (click)="setLoaneeFasalBimaShow(o)">
 
                       <ion-badge color="secondary">
-                        Source Awarness Detail {{i+1}}
+                        PMFBY/RWBCIS {{o+1}}
                       </ion-badge>
                       <ion-icon ios="ios-trash" md="md-trash" slot="end"></ion-icon>
                       <ion-icon ios="ios-color-wand" md="md-color-wand" slot="end"></ion-icon>
@@ -2160,29 +2160,307 @@
                 <ion-row [ngClass]="(LoaneeFasalBimaShowForm != o)?'hideFormGroup':'showFormGroup'">
                   <ion-col size="12">
                     <ion-item>
-                      <ion-label position="floating"> Sources of awareness:
+                      <ion-label position="floating"> Crop Season/Year
                         <ion-text color="danger">*</ion-text>
                       </ion-label>
                       <ion-input type="text" formControlName="cropSeason"></ion-input>
                     </ion-item>
                   </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating"> Crop insured
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="cropInsured"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating"> Area insured (in hectare)
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="areaInsured"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating">Farmer Premium
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="farmerPremium"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating">Sum Insured 
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="sumInsured"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  
+                <ion-col size="12" *ngIf="last && (o < 3)">
+                  <section>
+                    <!-- <header>Block Width</header> -->
+                    <ion-button expand="block" color="danger"
+                     
+                      (click)="addLoaneePradhanMantriFasalBima()">Add More</ion-button>
+                  </section>
+                </ion-col>
                 </ion-row>
               </div>
             </div>
-
+          
             <!---pradhanMantriFasalBima end---->
-
-
             <ion-col size="12">
-              <section>
-                <!-- <header>Block Width</header> -->
-                <ion-button expand="block" color="dark" [disabled]="SurveyRegistrationForm.get('generalDetail').invalid"
-                  (click)=setFormGroupNumber(2)>Next</ion-button>
-              </section>
+              <ion-item>
+                <ion-label position="floating">Provided any receipt 
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                 <ion-select interface="popover" formControlName="receiptAcknowledgementProvided">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Receive SMS for PMFBY/RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                 <ion-select interface="popover" formControlName="reciveSmsForPmfby">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
             </ion-col>
 
           </ion-row>
           <!------For Loanee Farmers end-->
+          
+          
+          <!-----for non laonee farmer start-->
+          <ion-row style="border:1px solid black;" formGroupName="nonLoaneeEnrollment">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label>For Non-Loanee Farmers</ion-label>
+              </ion-chip>
+            </ion-col>
+
+      
+            
+            <!---nonLoaneeCroppingDetail start ---->
+       
+            <div formArrayName="nonLoaneeCroppingDetail" style="width: 100%;">
+
+              <div style="border: 1px solid #a75c77;" *ngFor="let nonLoaneeCroppingDetail of nonLoaneeCroppingDetailArray.controls;let o = index;let first = first; 
+              let last = last;" formGroupName="{{o}}">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item color="tertiary" (click)="setNonLoaneeFasalBimaShow(o)">
+
+                      <ion-badge color="secondary">
+                        Crop Detail {{o+1}}
+                      </ion-badge>
+                      <ion-icon ios="ios-trash" md="md-trash" slot="end"></ion-icon>
+                      <ion-icon ios="ios-color-wand" md="md-color-wand" slot="end"></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row [ngClass]="(nonLoaneeFasalBimaShowForm != o)?'hideFormGroup':'showFormGroup'">
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating"> Crop Season/Year
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="cropSeason"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating"> Crop insured
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="cropInsured"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating"> Area insured (in hectare)
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="areaInsured"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating">Farmer Premium
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="farmerPremium"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating">Sum Insured 
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="sumInsured"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  
+                <ion-col size="12" *ngIf="last && (o < 3)">
+                  <section>
+                    <!-- <header>Block Width</header> -->
+                    <ion-button expand="block" color="danger"
+                     
+                      (click)="addNonLoaneeCroppingDetailFormData()">Add More</ion-button>
+                  </section>
+                </ion-col>
+                </ion-row>
+              </div>
+            </div>
+          
+            <!--nonLoaneeCroppingDetail  end---->
+
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Channel- Where you pay premium  
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                 <ion-select interface="popover" formControlName="enrollmentChannelPremiumPay">
+                  <ion-select-option value="bank">Bank</ion-select-option>
+                  <ion-select-option value="csc">CSC</ion-select-option>
+                  <ion-select-option value="bank">Online(Portal/App)</ion-select-option>
+                  <ion-select-option value="csc">Company representative</ion-select-option>
+                  <ion-select-option value="bank">Insurance Company</ion-select-option>
+                  <ion-select-option value="csc">Any</ion-select-option>
+                  <ion-select-option value="bank">Bank</ion-select-option>
+                  <ion-select-option value="csc">CSC</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Preminum pay place
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                 <ion-select interface="popover" formControlName="specificEnrollmentChannelPremiumPay">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Pay extra amount other than premium at CSC
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                 <ion-select interface="popover" formControlName="payExtraMoneyCsc">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Process of insuring crop under PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                 <ion-select interface="popover" formControlName="resonProcessOfInsuringCropUnderPmfby">
+                  <ion-select-option value="y">Easy</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Above Insuring crop Reason
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="resonProcessOfInsuringCropUnderPmfby"></ion-input>
+                
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">cut off date for enrolment under PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                 <ion-select interface="popover" formControlName="cutOffDateUnderPmfby">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+
+           <!---requiredEnrolmentDocument start ---->
+       
+           <div formArrayName="requiredEnrolmentDocument" style="width: 100%;">
+
+            <div style="border: 1px solid #a75c77;" *ngFor="let requiredEnrolmentDoc of requiredEnrolmentDocumentArray.controls; 
+            let k = index;let first = first;let last = last;" formGroupName="{{k}}">
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item color="tertiary" (click)="setrequiredEnrolmentDocumentShow(k)">
+
+                    <ion-badge color="secondary">
+                      Enrollment Document {{k+1}}
+                    </ion-badge>
+                    <ion-icon ios="ios-trash" md="md-trash" slot="end"></ion-icon>
+                    <ion-icon ios="ios-color-wand" md="md-color-wand" slot="end"></ion-icon>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row [ngClass]="(enrolmentDocumentShowForm != k)?'hideFormGroup':'showFormGroup'">
+                <ion-col size="12">
+                  <ion-item>
+                    <ion-label position="floating">Documents required for enrolment
+                      <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input type="text" formControlName="enrolmentDocument"></ion-input>
+                  </ion-item>
+                </ion-col>
+           
+                
+              <ion-col size="12" *ngIf="last && (k < 3)">
+                <section>
+              
+                  <ion-button expand="block" color="danger"
+                   
+                    (click)="addRequiredEnrolmentDocumentFormData()">Add More</ion-button>
+                </section>
+              </ion-col>
+              </ion-row>
+            </div>
+          </div>
+          
+        </ion-row>
+          <!--requiredEnrolmentDocument  end---->
+
+          <!-----for non laonee farmer end-->
+
+          <ion-row>
+            <ion-col size="6">
+              <section>
+           
+                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(5)>
+                  Previous
+                </ion-button>
+              </section>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="warning" [disabled]="SurveyRegistrationForm.get('awareness').invalid"
+                  (click)=setFormGroupNumber(7)>Next</ion-button>
+              </section>
+            </ion-col>
+          
+         </ion-row>
 
         </ion-grid>
       </ion-card-content>
