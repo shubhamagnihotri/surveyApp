@@ -752,30 +752,31 @@
 
               </ion-row>
 
+
             </div>
           </div>
+
+          <ion-row>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(3)>
+                  Previous
+                </ion-button>
+              </section>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="warning"
+                  [disabled]="SurveyRegistrationForm.get('croppingPattern').invalid" (click)=setFormGroupNumber(5)>
+                  Next</ion-button>
+              </section>
+            </ion-col>
+          </ion-row>
         </ion-grid>
       </ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <section>
-              <!-- <header>Block Width</header> -->
-              <ion-button expand="block" color="primary" (click)=setFormGroupNumber(3)>
-                Previous
-              </ion-button>
-            </section>
-          </ion-col>
-          <ion-col size="6">
-            <section>
-              <!-- <header>Block Width</header> -->
-              <ion-button expand="block" color="warning"
-                [disabled]="SurveyRegistrationForm.get('croppingPattern').invalid" (click)=setFormGroupNumber(5)>
-                Next</ion-button>
-            </section>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+
     </ion-card>
 
 
@@ -788,7 +789,7 @@
           *ngIf="(showFormGroupNumber == 5 && buttonPressNumber == true)"></ion-icon>
         <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
         <ion-badge color="secondary">
-         Cost of Cultivation
+          Cost of Cultivation
         </ion-badge>
         <!-- <ion-label>Survey 3 of {{totalFormField}}</ion-label> -->
         <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('costOfCultivation').invalid">
@@ -801,7 +802,7 @@
       <ion-card-content [ngClass]="(showFormGroupNumber != 5)?'hideFormGroup':'showFormGroup'">
         <ion-grid formGroupName="costOfCultivation">
           <ion-row style="border: 1px solid #0cd1e8;">
-            <ion-col size="12">              
+            <ion-col size="12">
               <ion-chip color="secondary">
                 <ion-label>Land Preparation</ion-label>
               </ion-chip>
@@ -837,7 +838,7 @@
           </ion-row>
 
           <ion-row style="border: 1px solid #0cd1e8;" formGroupName="sowing">
-            <ion-col size="12">              
+            <ion-col size="12">
               <ion-chip color="secondary">
                 <ion-label>Sowing –</ion-label>
               </ion-chip>
@@ -901,7 +902,7 @@
           </ion-row>
 
           <ion-row style="border: 1px solid #0cd1e8;">
-            <ion-col size="12">              
+            <ion-col size="12">
               <ion-chip color="secondary">
                 <ion-label>Cost of Manure & Fertilizer</ion-label>
               </ion-chip>
@@ -936,11 +937,537 @@
             </ion-col>
           </ion-row>
 
+          <!------interculturalOperation start-->
+          <ion-row style="border: 1px solid #0cd1e8;" formGroupName="interculturalOperation">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label>Intercultural Operation</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Thinning (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="thinningUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Thinning (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="thinningTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Gap Filling(Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="gapFillingUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Gap Filling(Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="gapFillingTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Weeding (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="weedingUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Weeding (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="weedingTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Hoeing (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="hoeingUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">Hoeing (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="hoeingTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
+          <!------interculturalOperation end ---->
+
+
+          <!------plantProtection start ---->
+          <ion-row style="border: 1px solid #0cd1e8;" formGroupName="plantProtection">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label>Plant Protection</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Pesticide/Fungicide(Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="pesticideFungicideCostUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Pesticide/Fungicide(Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="pesticideFungicideCostTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Labour Cost(Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="labourCostUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Labour Cost(Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="labourCostTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+          </ion-row>
+          <!------plantProtection end ---->
+
+
+
+          <!------Irrigation start ---->
+          <ion-row style="border: 1px solid #0cd1e8;" formGroupName="irrigationCost">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label> Irrigation cost </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Electricity/Fuel (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="electricityFuelUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Electricity/Fuel (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="electricityFuelTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Labour (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="labourUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Labour (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="labourTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Water Charges (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="waterChargesUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Water Charges (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-input type="text" formControlName="waterChargesTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.ownedLand.invalid && getError.ownedLand.touched">
+                <ion-text color="danger" *ngIf="getError.ownedLand.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
+          <!------irrigationCost end ---->
+
+
+
+          <!------harvestingCost start ---->
+          <ion-row style="border: 1px solid #0cd1e8;" formGroupName="harvestingCost">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label> Harvesting cost</ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Cutting/Picking (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="cuttingPickingUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Cutting/Picking (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="cuttingPickingTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Threshing (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="threshingUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Threshing (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="threshingTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+          </ion-row>
+          <!------harvestingCost end ---->
+
+
+          <!------marketingCost start ---->
+          <ion-row style="border: 1px solid #0cd1e8;" formGroupName="marketingCost">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label> Cost of Marketing </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Packaging (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="packagingUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Packaging (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="packagingTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Transportation (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="transportationUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Transportation (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="transportationTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Marketing commission (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="marketingCommissionUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Marketing commission (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="marketingCommissionTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+          </ion-row>
+          <!------marketingCost end ---->
+
+
+          <!------totalOverall start ---->
+          <ion-row style="border: 1px solid #0cd1e8;">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label> Total Overall </ion-label>
+              </ion-chip>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Total Expenditure (Unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="totalExpenditureUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Total Expenditure (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="totalExpenditureTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Income from sale of Farm produce (unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="saleOfFarmProduceUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Income from sale of Farm produce (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="saleOfFarmProduceTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Net Profit/Loss (unit)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="netProfitLossUnitCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Net Profit/Loss (Total)
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="netProfitLossTotalCost"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+
+          </ion-row>
+          <!------totalOverall end ---->
+
           <ion-row>
             <ion-col size="6">
               <section>
                 <!-- <header>Block Width</header> -->
-                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(2)>
+                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(4)>
                   Previous
                 </ion-button>
               </section>
@@ -948,18 +1475,720 @@
             <ion-col size="6">
               <section>
                 <!-- <header>Block Width</header> -->
-                <ion-button expand="block" color="warning" [disabled]="SurveyRegistrationForm.get('landDetail').invalid"
-                  (click)=setFormGroupNumber(4)>Next</ion-button>
+                <ion-button expand="block" color="warning"
+                  [disabled]="SurveyRegistrationForm.get('costOfCultivation').invalid" (click)=setFormGroupNumber(6)>
+                  Next</ion-button>
               </section>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card-content>
     </ion-card>
-       <!------costOfCultivation end----->
+    <!------costOfCultivation end----->
+
+
+
+    <!------Awareness start----->
+    <ion-card>
+      <ion-item color="primary" (click)="setFormGroupNumber(6)">
+        <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"
+          *ngIf="!(showFormGroupNumber == 6 && buttonPressNumber == true)"></ion-icon>
+        <ion-icon ios="ios-remove" md="md-remove" slot="start"
+          *ngIf="(showFormGroupNumber == 6 && buttonPressNumber == true)"></ion-icon>
+        <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+        <ion-badge color="secondary">
+          Awareness
+        </ion-badge>
+        <!-- <ion-label>Survey 3 of {{totalFormField}}</ion-label> -->
+        <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('awareness').invalid">
+          Filled
+        </ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="SurveyRegistrationForm.get('awareness').invalid">
+          Not Filled
+        </ion-badge>
+      </ion-item>
+      <ion-card-content [ngClass]="(showFormGroupNumber != 6)?'hideFormGroup':'showFormGroup'">
+        <ion-grid formGroupName="awareness">
+          <ion-row style="border: 1px solid #0cd1e8;">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label> Awareness</ion-label>
+              </ion-chip>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">know about PMFBY/RWBCIS?
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="knowAboutPmfbyRwbcis">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+
+                </ion-select>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
+
+          <!----scheme information start -->
+          <ion-row style="border: 1px solid #0cd1e8;" formGroupName="schemeInformation">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label> Checklist for scheme information </ion-label>
+              </ion-chip>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Crops covered PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="cropsCoveredPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Crops covered RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="cropsCoveredRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Enrollment Channels PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="enrollmentChannelsPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Enrollment Channels RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="enrollmentChannelsRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Cut off dates for enrollment PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="enrollmentCutOffDatesPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Cut off dates for enrollment RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="enrollmentCutOffDatesRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Premium amount/Sum insured PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="sumInsuredPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Premium amount/Sum insured RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="sumInsuredRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Insurance company PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="insuranceCompanyPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Insurance company RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="insuranceCompanyRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Acknowledgement receipt PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="acknowledgementReceiptPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Acknowledgement receipt RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="acknowledgementReceiptRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Risk covered PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="riskCoveredPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Risk covered RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="riskCoveredRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Claim process PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="claimProcessPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Claim process RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="claimProcessRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Grievance redressel PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="grievanceRedresselPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Grievance redressel RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="grievanceRedresselRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Insurance company tollno. PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="insuranceCompanyNoPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Insurance company tollno. RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="insuranceCompanyNoRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Crop insurance app PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="cropInsuranceAppPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Crop insurance app RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="cropInsuranceAppRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Tracking of Application PMFBY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="applicationTrackingPmfby"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Tracking of Application RWBCIS
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="applicationTrackingRwbcis"></ion-input>
+              </ion-item>
+              <p *ngIf="getError.holdingSize.invalid && getError.holdingSize.touched">
+                <ion-text color="danger" *ngIf="getError.holdingSize.errors?.required">
+                  <ion-icon name="alert"></ion-icon> Required.
+                </ion-text>
+              </p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <!----scheme information end -->
+
+        <div formArrayName="awarenessSourceDetail">
+
+          <div style="border: 1px solid #a75c77;" *ngFor="let awarenessSourceDetail of AwarenessSourceArray.controls; let point = index;let f = first; 
+            let l = last;" [formGroupName]="point">
+
+            <ion-row>
+              <ion-col size="12">
+                <ion-item color="tertiary" (click)="setSourceOfawarenessShow(point)">
+
+                  <ion-badge color="secondary">
+                    Awareness Source Detail {{point+1}}
+                  </ion-badge>
+                  <ion-icon ios="ios-trash" md="md-trash" slot="end"></ion-icon>
+                  <ion-icon ios="ios-color-wand" md="md-color-wand" slot="end"></ion-icon>
+
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row [ngClass]="(sourceOfawarenessShowForm != point)?'hideFormGroup':'showFormGroup'">
+
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Crop
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+                  <ion-input type="text" formControlName="sourcesOfAwareness"></ion-input>
+                </ion-item>
+
+              </ion-col>
+
+
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Sources of awareness
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+                  <ion-input type="text" formControlName="sourcesOfAwareness"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Govt officials
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+                  <ion-select interface="popover" formControlName="govtOfficials">
+                    <ion-select-option value="s">State</ion-select-option>
+                    <ion-select-option value="d">District</ion-select-option>
+                    <ion-select-option value="b">Block</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Banks
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+
+                  <ion-input type="text" formControlName="banks"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Insurance Company toll free no.
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+
+                  <ion-input type="text" formControlName="insuranceCompanyTollNo"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Insurance company representative
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+
+                  <ion-input type="text" formControlName="insuranceCompanyRepresentative"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">CSC-VLE
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+
+                  <ion-input type="text" formControlName="cscVle"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating"> Gram Panchayat/Gram Sabha
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+
+                  <ion-input type="text" formControlName="gramPanchayat"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="floating">Fellow Farmer
+                    <ion-text color="danger">*</ion-text>
+                  </ion-label>
+
+                  <ion-input type="text" formControlName="fellowFarmer"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size="12" *ngIf="l && (l < 2)">
+                <section>
+                  <!-- <header>Block Width</header> -->
+                  <ion-button expand="block" color="danger"
+                    [disabled]="SurveyRegistrationForm.get('awarenessSourceDetail').invalid"
+                    (click)="addsourcesOfAwarenessFormData()">Add More</ion-button>
+                </section>
+              </ion-col>
+
+            </ion-row>
+
+
+          </div>
+        </div>
+
+        <ion-grid formGroupName="awareness">
+
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Mode of information:
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+
+                <ion-select interface="popover" formControlName="specificModeOfInformation">
+                  <ion-select-option value="tv">TV</ion-select-option>
+                  <ion-select-option value="radio">Radio</ion-select-option>
+                  <ion-select-option value="printMedia">Print Media</ion-select-option>
+                  <ion-select-option value="outdoorMedia">Outdoor Media</ion-select-option>
+                  <ion-select-option value="awarenessCamp">Awareness Camp</ion-select-option>
+                  <ion-select-option value="streetPlay">Street Play</ion-select-option>
+                  <ion-select-option value="socialMedia">Social Media</ion-select-option>
+                  <ion-select-option value="pamphletBrochure">Pamphlet/Brochure</ion-select-option>
+                  <ion-select-option value="audioVisualVans">Audio Visual Vans</ion-select-option>
+                  <ion-select-option value="kisanMela">Kisan Mela</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Specific Mode Of Information
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="specificModeOfInformation"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Is Seminar Attended PMFY
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="isSeminarAttendedPmfby">
+                  <ion-select-option value="tv">Yes</ion-select-option>
+                  <ion-select-option value="radio">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">when Seminar Attended
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="whenSeminarAttended"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="floating">where Seminar Attended
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-input type="text" formControlName="whereSeminarAttended"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="primary" (click)=setFormGroupNumber(5)>
+                  Previous
+                </ion-button>
+              </section>
+            </ion-col>
+            <ion-col size="6">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="warning" [disabled]="SurveyRegistrationForm.get('awareness').invalid"
+                  (click)=setFormGroupNumber(7)>Next</ion-button>
+              </section>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+      </ion-card-content>
+    </ion-card>
+    <!------Awareness end----->
+
+    <!--Enrolment start-->
+    <ion-card>
+      <ion-item color="primary" (click)="setFormGroupNumber(7)">
+        <ion-icon ios="ios-add-circle" md="md-add-circle" slot="start"
+          *ngIf="!(showFormGroupNumber == 7 && buttonPressNumber == true)"></ion-icon>
+        <ion-icon ios="ios-remove" md="md-remove" slot="start"
+          *ngIf="(showFormGroupNumber == 7 && buttonPressNumber == true)"></ion-icon>
+        <!-- <ion-icon name="pin" slot="start"></ion-icon> -->
+        <ion-badge color="secondary">
+          Genral
+        </ion-badge>
+        <!-- <ion-label>1 of {{totalFormField}}</ion-label> -->
+        <ion-badge color="success" slot="end" *ngIf="!SurveyRegistrationForm.get('enrollmentdetail').invalid">
+          Filled
+        </ion-badge>
+        <ion-badge color="danger" slot="end" *ngIf="SurveyRegistrationForm.get('enrollmentdetail').invalid">
+          Not Filled
+        </ion-badge>
+      </ion-item>
+
+      <ion-card-content [ngClass]="(showFormGroupNumber != 7)?'hideFormGroup':'showFormGroup'">
+        <ion-grid formGroupName="enrollmentdetail">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Enrollment Type
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="loaneeType">
+                  <ion-select-option value="m">Yes</ion-select-option>
+                  <ion-select-option value="f">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <!------For Loanee Farmers start-->
+          <ion-row style="border:1px solid black;" formGroupName="loaneeEnrollment">
+            <ion-col size="12">
+              <ion-chip color="secondary">
+                <ion-label>For Loanee Farmers</ion-label>
+              </ion-chip>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Do you have KCC?
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="haveKcc">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Loan Avail
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="availLoan">
+                  <ion-input type="text" formControlName="availLoan"></ion-input>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">PMFBY/RWBCIS premium deduction aware
+                  <ion-text color="danger">*</ion-text>
+                </ion-label>
+                <ion-select interface="popover" formControlName="loanPremiumDeducTionAwareness">
+                  <ion-select-option value="y">Yes</ion-select-option>
+                  <ion-select-option value="n">No</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <!---pradhanMantriFasalBima start---->
+
+            <div formArrayName="pradhanMantriFasalBima">
+
+              <div style="border: 1px solid #a75c77;" *ngFor="let loaneePradhanMantriFasalBima of loaneePradhanMantriFasalBima.controls;let o = index;let first = first; 
+              let last = last;" formGroupName="{{o}}">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item color="tertiary" (click)="setLoaneeFasalBimaShow(o)">
+
+                      <ion-badge color="secondary">
+                        Source Awarness Detail {{i+1}}
+                      </ion-badge>
+                      <ion-icon ios="ios-trash" md="md-trash" slot="end"></ion-icon>
+                      <ion-icon ios="ios-color-wand" md="md-color-wand" slot="end"></ion-icon>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row [ngClass]="(LoaneeFasalBimaShowForm != o)?'hideFormGroup':'showFormGroup'">
+                  <ion-col size="12">
+                    <ion-item>
+                      <ion-label position="floating"> Sources of awareness:
+                        <ion-text color="danger">*</ion-text>
+                      </ion-label>
+                      <ion-input type="text" formControlName="cropSeason"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </div>
+
+            <!---pradhanMantriFasalBima end---->
+
+
+            <ion-col size="12">
+              <section>
+                <!-- <header>Block Width</header> -->
+                <ion-button expand="block" color="dark" [disabled]="SurveyRegistrationForm.get('generalDetail').invalid"
+                  (click)=setFormGroupNumber(2)>Next</ion-button>
+              </section>
+            </ion-col>
+
+          </ion-row>
+          <!------For Loanee Farmers end-->
+
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+    <!--Enrolment end-->
 
 
   </form>
-
-
 </ion-content>
